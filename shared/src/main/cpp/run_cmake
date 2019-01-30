@@ -1,0 +1,4 @@
+cmake -DANDROID_ABI=armeabi-v7a -DANDROID_PLATFORM=android-19 -DCMAKE_BUILD_TYPE=Debug -DANDROID_NDK=/Users/blakemeike/Library/Android/sdk/ndk-bundle -DCMAKE_CXX_FLAGS="-std=c++11 -frtti -fexceptions -fPIC" -DCMAKE_TOOLCHAIN_FILE=/Users/blakemeike/Library/Android/sdk/ndk-bundle/build/cmake/android.toolchain.cmake -DCMAKE_MAKE_PROGRAM=/Users/blakemeike/Library/Android/sdk/cmake/3.6.4111459/bin/ninja -G"Android Gradle - Ninja" -DANDROID_STL=c++_static -DANDROID_TOOLCHAIN=clang -DANDROID_PLATFORM=android-19 ../libs/couchbase-lite-core
+
+cmake --build . --target LiteCoreJNI
+
