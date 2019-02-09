@@ -6,7 +6,9 @@ import android.support.test.InstrumentationRegistry;
 import com.couchbase.lite.internal.support.Log;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -27,6 +29,9 @@ import static org.junit.Assert.fail;
 
 public class LogTest extends BaseTest {
     private Context context;
+
+    @Rule
+    public TemporaryFolder tempFolder = new TemporaryFolder();
 
     @Before
     public void setUp() throws Exception {
@@ -76,11 +81,8 @@ public class LogTest extends BaseTest {
 
     //region File Logging Tests
     @Test
-    public void testFileLoggingLoggingLevels() {
-        final File path = new File(
-                context.getCacheDir().getAbsolutePath(),
-                "testFileLoggingLoggingLevels"
-        );
+    public void testFileLoggingLoggingLevels() throws Exception {
+        final File path = tempFolder.newFolder();
         final String logDirectory = emptyDirectory(path.getAbsolutePath());
         LogFileConfiguration config = new LogFileConfiguration(logDirectory)
                 .setUsePlaintext(true)
@@ -131,11 +133,8 @@ public class LogTest extends BaseTest {
     }
 
     @Test
-    public void testFileLoggingDefaultBinaryFormat() {
-        final File path = new File(
-                context.getCacheDir().getAbsolutePath(),
-                "testFileLoggingDefaultBinaryFormat"
-        );
+    public void testFileLoggingDefaultBinaryFormat() throws Exception {
+        final File path = tempFolder.newFolder();
         final String logDirectory = emptyDirectory(path.getAbsolutePath());
         LogFileConfiguration config = new LogFileConfiguration(logDirectory);
 
@@ -170,11 +169,8 @@ public class LogTest extends BaseTest {
     }
 
     @Test
-    public void testFileLoggingUsePlainText() {
-        final File path = new File(
-                context.getCacheDir().getAbsolutePath(),
-                "testFileLoggingUsePlainText"
-        );
+    public void testFileLoggingUsePlainText() throws Exception {
+        final File path = tempFolder.newFolder();
         final String logDirectory = emptyDirectory(path.getAbsolutePath());
         LogFileConfiguration config = new LogFileConfiguration(logDirectory).setUsePlaintext(true);
 
@@ -215,11 +211,8 @@ public class LogTest extends BaseTest {
     }
 
     @Test
-    public void testFileLoggingLogFilename() {
-        final File path = new File(
-                context.getCacheDir().getAbsolutePath(),
-                "testFileLoggingLogFilename"
-        );
+    public void testFileLoggingLogFilename() throws Exception {
+        final File path = tempFolder.newFolder();
         final String logDirectory = emptyDirectory(path.getAbsolutePath());
         LogFileConfiguration config = new LogFileConfiguration(logDirectory);
 
@@ -240,11 +233,8 @@ public class LogTest extends BaseTest {
     }
 
     @Test
-    public void testFileLoggingMaxSize() {
-        final File path = new File(
-                context.getCacheDir().getAbsolutePath(),
-                "testFileLoggingMaxSize"
-        );
+    public void testFileLoggingMaxSize() throws Exception {
+        final File path = tempFolder.newFolder();
         final String logDirectory = emptyDirectory(path.getAbsolutePath());
         final LogFileConfiguration config = new LogFileConfiguration(logDirectory)
                 .setUsePlaintext(true)
@@ -269,11 +259,8 @@ public class LogTest extends BaseTest {
     }
 
     @Test
-    public void testFileLoggingDisableLogging() {
-        final File path = new File(
-                context.getCacheDir().getAbsolutePath(),
-                "testFileLoggingDisableLogging"
-        );
+    public void testFileLoggingDisableLogging() throws Exception {
+        final File path = tempFolder.newFolder();
         final String logDirectory = emptyDirectory(path.getAbsolutePath());
         final LogFileConfiguration config = new LogFileConfiguration(logDirectory)
                 .setUsePlaintext(true);
@@ -299,11 +286,8 @@ public class LogTest extends BaseTest {
     }
 
     @Test
-    public void testFileLoggingReEnableLogging() {
-        final File path = new File(
-                context.getCacheDir().getAbsolutePath(),
-                "testFileLoggingReEnableLogging"
-        );
+    public void testFileLoggingReEnableLogging() throws Exception {
+        final File path = tempFolder.newFolder();
         final String logDirectory = emptyDirectory(path.getAbsolutePath());
         LogFileConfiguration config = new LogFileConfiguration(logDirectory)
                 .setUsePlaintext(true);
@@ -348,11 +332,8 @@ public class LogTest extends BaseTest {
     }
 
     @Test
-    public void testFileLoggingHeader() {
-        final File path = new File(
-                context.getCacheDir().getAbsolutePath(),
-                "testFileLoggingHeader"
-        );
+    public void testFileLoggingHeader() throws Exception {
+        final File path = tempFolder.newFolder();
         final String logDirectory = emptyDirectory(path.getAbsolutePath());
         LogFileConfiguration config = new LogFileConfiguration(logDirectory)
                 .setUsePlaintext(true);
@@ -378,11 +359,8 @@ public class LogTest extends BaseTest {
     }
 
     @Test
-    public void testWriteLogWithError() {
-        final File path = new File(
-                context.getCacheDir().getAbsolutePath(),
-                "testLogWithError"
-        );
+    public void testWriteLogWithError() throws Exception {
+        final File path = tempFolder.newFolder();
         final String logDirectory = emptyDirectory(path.getAbsolutePath());
         LogFileConfiguration config = new LogFileConfiguration(logDirectory)
                 .setUsePlaintext(true);
@@ -413,11 +391,8 @@ public class LogTest extends BaseTest {
     }
 
     @Test
-    public void testWriteLogWithErrorAndArgs() {
-        final File path = new File(
-                context.getCacheDir().getAbsolutePath(),
-                "testWriteLogWithErrorAndArgs"
-        );
+    public void testWriteLogWithErrorAndArgs() throws Exception {
+        final File path = tempFolder.newFolder();
         final String logDirectory = emptyDirectory(path.getAbsolutePath());
         LogFileConfiguration config = new LogFileConfiguration(logDirectory)
                 .setUsePlaintext(true);
@@ -450,7 +425,7 @@ public class LogTest extends BaseTest {
     }
 
     @Test
-    public void testLogFileConfigurationConstructors() {
+    public void testLogFileConfigurationConstructors() throws Exception {
         int rotateCount = 4;
         long maxSize = 2048;
         boolean usePlainText = true;
@@ -462,10 +437,7 @@ public class LogTest extends BaseTest {
         thrown.expect(IllegalArgumentException.class);
         config = new LogFileConfiguration((LogFileConfiguration) null);
 
-        final File path1 = new File(
-                context.getCacheDir().getAbsolutePath(),
-                "testFileLogConfiguration"
-        );
+        final File path1 = tempFolder.newFolder();
         config = new LogFileConfiguration(path1.getAbsolutePath())
                 .setMaxRotateCount(rotateCount)
                 .setMaxSize(maxSize)
@@ -476,10 +448,7 @@ public class LogTest extends BaseTest {
         assertEquals(config.getDirectory(), path1.getAbsolutePath());
 
         // validate with LogFileConfiguration(String, config) constructor
-        final File path2 = new File(
-                context.getCacheDir().getAbsolutePath(),
-                "testFileLogConfigurationNew"
-        );
+        final File path2 = tempFolder.newFolder();
         LogFileConfiguration newConfig = new LogFileConfiguration(path2.getAbsolutePath(), config);
         assertEquals(newConfig.getMaxRotateCount(), rotateCount);
         assertEquals(newConfig.getMaxSize(), maxSize);
@@ -488,23 +457,24 @@ public class LogTest extends BaseTest {
     }
 
     @Test
-    public void testEditReadOnlyLogFileConfiguration() {
-        final File path = new File(
-                context.getCacheDir().getAbsolutePath(),
-                "testEditReadOnlyLogFileConfiguration"
-        );
+    public void testEditReadOnlyLogFileConfiguration() throws Exception {
+        final File path = tempFolder.newFolder();
         final String logDirectory = emptyDirectory(path.getAbsolutePath());
         LogFileConfiguration config = new LogFileConfiguration(logDirectory);
-        Database.log.getFile().setConfig(config);
 
-        thrown.expect(IllegalStateException.class);
-        Database.log.getFile().getConfig().setMaxSize(1024);
+        testWithConfiguration(LogLevel.DEBUG, config, new Runnable() {
+            @Override
+            public void run() {
+                thrown.expect(IllegalStateException.class);
+                Database.log.getFile().getConfig().setMaxSize(1024);
 
-        thrown.expect(IllegalStateException.class);
-        Database.log.getFile().getConfig().setMaxRotateCount(3);
+                thrown.expect(IllegalStateException.class);
+                Database.log.getFile().getConfig().setMaxRotateCount(3);
 
-        thrown.expect(IllegalStateException.class);
-        Database.log.getFile().getConfig().setUsePlaintext(true);
+                thrown.expect(IllegalStateException.class);
+                Database.log.getFile().getConfig().setUsePlaintext(true);
+            }
+        });
     }
 
     //endregion
